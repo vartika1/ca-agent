@@ -1,0 +1,16 @@
+# CA Agent dependencies
+#
+# The CORE ENGINE (scripts/dual_regime_calculator, capital_gains_engine, heads,
+# reconciler, form_selector, package_builder, pipeline, parsers/*) uses ONLY the
+# Python standard library — nothing below is needed to compute a return or run
+# the test suite (bash run_tests.sh works on a bare Python 3.9+).
+#
+# The packages below are needed ONLY to parse real-world documents during a live
+# filing: broker/MF Excel reports and password-protected PDF Form 16s / bank
+# certificates. Install them before a real harvest:
+#     pip3 install -r requirements.txt
+
+openpyxl>=3.1      # read broker tax-P&L and MF Central .xlsx statements
+pypdf>=6.0         # extract text from Form 16 / interest-certificate PDFs
+pikepdf>=10.0      # open password-protected (AES) PDFs (PAN / PAN+DOB)
+cryptography>=3.1  # AES backend pikepdf/pypdf require for encrypted PDFs

@@ -1,0 +1,155 @@
+{
+  "assessment_year": "2026-27",
+  "financial_year": "2025-26",
+  "governing_act": "Income-tax Act 1961 (last AY under this Act; IT Act 2025 applies from tax year 2026-27)",
+  "verified_on": "2026-07-04",
+  "verification_note": "Verified against incometax.gov.in, ClearTax, Tax2Win, TaxGuru on 2026-07-04. Re-check for CBDT deadline extensions before 31 Jul 2026.",
+  "cess_rate": 0.04,
+  "deadlines": {
+    "itr_1_2": "2026-07-31",
+    "itr_3_4_non_audit": "2026-08-31",
+    "audit_cases": "2026-10-31",
+    "transfer_pricing": "2026-11-30",
+    "belated_return": "2026-12-31",
+    "revised_return": "2027-03-31",
+    "e_verification_days_after_filing": 30
+  },
+  "new_regime": {
+    "is_default": true,
+    "slabs": [
+      [0, 400000, 0.0],
+      [400000, 800000, 0.05],
+      [800000, 1200000, 0.1],
+      [1200000, 1600000, 0.15],
+      [1600000, 2000000, 0.2],
+      [2000000, 2400000, 0.25],
+      [2400000, null, 0.3]
+    ],
+    "basic_exemption": 400000,
+    "standard_deduction_salary": 75000,
+    "rebate_87a": {
+      "total_income_limit": 1200000,
+      "max_rebate": 60000,
+      "covers_stcg_111a": false,
+      "covers_ltcg_112a": false,
+      "covers_ltcg_other": false,
+      "covers_vda": false,
+      "marginal_relief": true,
+      "note": "Finance Act 2025 statutorily bars 87A against ALL special-rate income for AY 2026-27; earlier-year litigation (Circular 13/2025 vs ITAT) does not apply this season."
+    },
+    "surcharge_slabs": [
+      [5000000, 0.1],
+      [10000000, 0.15],
+      [20000000, 0.25]
+    ],
+    "surcharge_cap_cg_dividend": 0.15
+  },
+  "old_regime": {
+    "opt_in_form_business": "10-IEA (on/before s.139(1) due date; once-in-a-lifetime switch-back for business income)",
+    "basic_exemption": { "below_60": 250000, "senior_60_to_79": 300000, "super_senior_80_plus": 500000 },
+    "slabs_below_60": [
+      [0, 250000, 0.0],
+      [250000, 500000, 0.05],
+      [500000, 1000000, 0.2],
+      [1000000, null, 0.3]
+    ],
+    "slabs_senior_60_to_79": [
+      [0, 300000, 0.0],
+      [300000, 500000, 0.05],
+      [500000, 1000000, 0.2],
+      [1000000, null, 0.3]
+    ],
+    "slabs_super_senior_80_plus": [
+      [0, 500000, 0.0],
+      [500000, 1000000, 0.2],
+      [1000000, null, 0.3]
+    ],
+    "standard_deduction_salary": 50000,
+    "rebate_87a": {
+      "total_income_limit": 500000,
+      "max_rebate": 12500,
+      "covers_stcg_111a": true,
+      "covers_ltcg_112a": false,
+      "covers_ltcg_other": true,
+      "covers_vda": false,
+      "marginal_relief": false
+    },
+    "surcharge_slabs": [
+      [5000000, 0.1],
+      [10000000, 0.15],
+      [20000000, 0.25],
+      [50000000, 0.37]
+    ],
+    "surcharge_cap_cg_dividend": 0.15,
+    "via_caps": {
+      "80C": 150000,
+      "80CCD(1B)": 50000,
+      "80TTA": 10000,
+      "80TTB": 50000
+    }
+  },
+  "special_rates": {
+    "stcg_111a": 0.2,
+    "ltcg_112a": 0.125,
+    "ltcg_112a_exemption": 125000,
+    "ltcg_other": 0.125,
+    "ltcg_property_indexed_option": 0.2,
+    "vda_115bbh": 0.3,
+    "winnings_115bb": 0.3,
+    "note_rate_split": "The 23-Jul-2024 rate split (STCG 15%->20%, LTCG 10%->12.5%) matters only for AY 2025-26; every FY 2025-26 transfer is post-cutoff, so 20%/12.5% apply uniformly this season."
+  },
+  "capital_gains_classification": {
+    "listed_equity_ltcg_months": 12,
+    "other_assets_ltcg_months": 24,
+    "specified_fund_50aa_cutoff": "2023-04-01",
+    "grandfathering_date": "2018-01-31",
+    "property_indexation_option_cutoff": "2024-07-23"
+  },
+  "trading": {
+    "audit_turnover_limit_digital": 100000000,
+    "presumptive_44ad_rate_digital": 0.06,
+    "presumptive_44ad_rate_cash": 0.08,
+    "speculative_loss_carry_years": 4,
+    "non_speculative_loss_carry_years": 8,
+    "capital_loss_carry_years": 8
+  },
+  "presumptive": {
+    "44AD_turnover_limit": 20000000,
+    "44AD_turnover_limit_95pct_digital": 30000000,
+    "44ADA_receipts_limit": 5000000,
+    "44ADA_receipts_limit_95pct_digital": 7500000,
+    "44ADA_deemed_rate": 0.5
+  },
+  "house_property": {
+    "standard_deduction_pct": 0.3,
+    "max_self_occupied": 2,
+    "sop_interest_cap_old_regime": 200000,
+    "interhead_loss_cap": 200000
+  },
+  "deductions_via": {
+    "80C_cap": 150000,
+    "80CCD1B_cap": 50000,
+    "80D_self_cap": 25000,
+    "80D_self_senior_cap": 50000,
+    "80D_parents_cap": 25000,
+    "80D_parents_senior_cap": 50000,
+    "80TTA_cap": 10000,
+    "80TTB_cap": 50000,
+    "80GG_annual_cap": 60000,
+    "80EEA_cap": 150000,
+    "80EEB_cap": 150000,
+    "80U_cap": 75000,
+    "80U_severe_cap": 125000,
+    "80DD_cap": 75000,
+    "80DD_severe_cap": 125000,
+    "80G_qualifying_limit_pct_agti": 0.1,
+    "family_pension_fraction": 0.3333333333,
+    "family_pension_cap_old": 15000,
+    "family_pension_cap_new": 25000
+  },
+  "itr_form_notes": {
+    "itr1_new_this_year": "ITR-1/ITR-4 now allow up to TWO house properties and LTCG 112A up to Rs 1.25L (no carried-forward capital losses).",
+    "loss_carry_forward": "Requires filing by s.139(1) due date (except house-property loss and unabsorbed depreciation).",
+    "evidence_requirements_new": "80GGC needs party name+PAN; 80G needs transaction reference number + IFSC."
+  }
+}

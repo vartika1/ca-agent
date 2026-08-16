@@ -1,0 +1,14 @@
+# NEVER commit real taxpayer data — PII (PAN, salary, bank, trades, Form 16s)
+clients/
+*.pdf
+*_form16*.txt
+*_trades.json
+
+# scratch / caches
+__pycache__/
+*.pyc
+.DS_Store
+
+# downloaded statements (may contain PII)
+*AIS*.json
+*taxpnl*.xlsx
