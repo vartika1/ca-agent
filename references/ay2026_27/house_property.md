@@ -47,7 +47,7 @@ declares only their share of interest AND rent.
 - TDS on rent: tenant may have deducted 2%/5% (194-IB) — it's in 26AS; claim it.
 - **Address line ≤ 50 chars (hard schema limit).** Schedule HP's property
   `AddrDetail` is one field and must be ≤50 chars — a 72-char address copied
-  from the prior return ("FLAT 000, SOME TOWER, SOME TOWNSHIP, SOME MAIN
+  from a prior return (e.g. "FLAT 000, SOME TOWER, SOME TOWNSHIP, SOME MAIN
   ROAD, SOME LOCALITY") FAILED the offline utility's validation. Keep flat +
   building + township; town/city, state and PIN go in their own fields. Check
   this at JSON-prep time, not at the validation wall.
