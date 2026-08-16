@@ -9,6 +9,7 @@
 ![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue)
 ![Assessment Year 2026-27](https://img.shields.io/badge/AY-2026--27-green)
 ![Assisted filing — you stay in control](https://img.shields.io/badge/filing-assisted%2C%20you%20approve-orange)
+![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey)
 
 It reads your **AIS**, parses your **Form 16** and **broker/mutual-fund
 statements**, computes tax under **both the old and new regimes**, reconciles
@@ -166,9 +167,8 @@ is smoother. **Never attach real PII** (PAN, Form 16, statements) to an issue.
 
 ## 📄 License
 
-Add a license before wide sharing so others can legally reuse it — MIT is a good
-default for a tool meant for everyone. *(No license file yet — until one is
-added, standard "all rights reserved" applies.)*
+**[MIT](LICENSE)** — free to use, copy, modify, and share, including
+commercially; just keep the copyright notice. © 2026 Vartika Singh.
 
 ---
 
