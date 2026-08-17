@@ -183,8 +183,13 @@ table and examples.
 
 **CAKEWALK SEQUENCE (do these in order; details in the numbered steps below):**
 1. Build the ITR JSON → **run `scripts/preflight_itr_check.py`** → fix every 🔴 BLOCKING item.
-2. Import into `/Applications/ITDe-Filing-2026.app` → Skip Questions → **Confirm every schedule**.
-3. Apply manual fix-ups (perquisites, crypto/staking in OS, dividend quarters) → **Internal Validation** = clean.
+1b. **`scripts/make_fill_plan.py <json> -o fill_plan.md` → DECIDE EVERY VALUE NOW.** Read the plan
+   before opening the utility. From here on the sitting is mechanical: you are entering
+   pre-decided numbers, never working one out at a screen. If a screen disagrees with the
+   plan, STOP and re-check the JSON — do not improvise a figure live.
+2. Import into `/Applications/ITDe-Filing-2026.app` → Skip Questions → **Confirm every schedule**
+   (check each against the plan's Phase-2 figure — a glance, not a calculation).
+3. Type the Phase-3 fields (import misses them) with `drive.py batch` → **Internal Validation** = clean.
 4. **Download JSON** (utility signs it). Re-run the pre-flight checker on the downloaded file.
 5. User logs into the portal → e-File → Offline → 139(1)/audit-No/ITR-type → Continue → **Attach** the signed JSON.
 6. Portal shows a **defect table**: fix any **Category A** (blocking) in the utility + re-download; **ignore N/A Category B/C/D**.
@@ -219,15 +224,20 @@ from portal → Downloads). It's a Go/Wails **WKWebView** app (no debug port).
 - **Confirm EVERY active schedule** (open each, verify the numbers, Confirm).
   SI / IF / VI-A / ESOP etc. auto-populate to ₹0 in simple cases — still open +
   Confirm. Greyed non-applicable schedules (80-IA/IB/IE, AMT) need NO confirm.
-- Manual fix-ups the import may miss, entered by hand: salary perquisites 17(2),
-  OS "any other income" (e.g. crypto staking), OS dividend quarterly split.
+  **Verify against the fill plan's Phase-2 line for that schedule** — one glance
+  per schedule; you are not recomputing anything here.
+- Manual fix-ups the import may miss (salary perquisites 17(2), OS "any other
+  income" e.g. crypto staking, OS dividend quarterly split): **the fill plan's
+  Phase 3 already lists each one with its exact value and where it sits on
+  screen.** Enter them with one `drive.py batch` per field, then a single
+  verification shot. Never derive these at the keyboard.
 - Run **Internal Validation** → must say *"Validation successful, no errors"*.
   Fix any error → re-Confirm that schedule → re-validate.
 - **Download JSON** → the app emits the signed `PAN_upload_<timestamp>.json`.
   This is the REAL signed file — never hand-edit it after.
 
 ### 2. Driving the utility (Quartz synthetic events)
-Toolkit: `clients/<client>/filing_toolkit/drive.py` (recreate venv:
+Toolkit: `filing_toolkit/drive.py` (ships with the repo; recreate venv:
 `python3 -m venv /tmp/itdvenv && /tmp/itdvenv/bin/pip install pyobjc-framework-Quartz`).
 Window usually on the 2nd (non-retina) display → 1:1 image↔point coords.
 - **Text/amount fields REJECT synthetic unicode typing.** To set a field:
