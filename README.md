@@ -203,7 +203,9 @@ clients/                     YOUR data goes here — git-ignored, never publishe
 This skill gets better from real filings. If it gets something wrong, or you hit
 a portal quirk it didn't know about, open an issue or PR — corrections get
 folded permanently into `SKILL.md` and the playbook, so the next person's filing
-is smoother. **Never attach real PII** (PAN, Form 16, statements) to an issue.
+is smoother. Read [CONTRIBUTING.md](CONTRIBUTING.md) first — the one hard rule:
+**never include real taxpayer data** (PAN, Form 16, AIS, real figures) in a PR
+or issue; use synthetic data like the test fixtures do.
 
 ## 📄 License
 
