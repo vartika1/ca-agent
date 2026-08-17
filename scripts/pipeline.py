@@ -72,14 +72,70 @@ def run_pipeline(raw_intake: dict, rules: dict = None, ais: dict = None) -> dict
     business["books_income"] = biz_cfg["regular_books_income"]
     business["total_business_income"] = business_total
 
+    # --- s.71 inter-head set-off (Schedule CYLA) --------------------------------
+    # Current-year non-speculative business loss MUST set off against other heads
+    # in the same year (s.71); only the remainder carries forward (s.72). Never
+    # against salary (s.71(2A)), VDA (s.115BBH) or winnings (s.58(4)). Positive
+    # business income (books/presumptive) absorbs it first (intra-head), then
+    # slab-taxed income (OS + s.50AA slab CG), then STCG 111A, then LTCG — the
+    # highest-taxed income first, which is the taxpayer-favourable order.
+    # Speculative loss stays speculative-only (s.73) — untouched here.
+    os_old, os_new = os_result["old"], os_result["new"]
+    cg_stcg_slab, cg_stcg_111a = cg.stcg_slab, cg.stcg_111a
+    cg_ltcg_other, cg_ltcg_112a = cg.ltcg_other, cg.ltcg_112a
+    cyla_absorbed = 0.0
+    cy_ns_loss = business["carry_forward_non_speculative"]
+    if cy_ns_loss > 0:
+        remaining = cy_ns_loss
+        if business_total > 0:
+            take = min(remaining, business_total)
+            business_total -= take
+            remaining -= take
+        for attr in ("os", "stcg_slab", "stcg_111a", "ltcg_other", "ltcg_112a"):
+            if remaining <= 0:
+                break
+            if attr == "os":
+                take = min(remaining, max(os_old, 0.0))
+                os_old -= take
+                os_new = max(0.0, os_new - take)
+            elif attr == "stcg_slab":
+                take = min(remaining, cg_stcg_slab)
+                cg_stcg_slab -= take
+            elif attr == "stcg_111a":
+                take = min(remaining, cg_stcg_111a)
+                cg_stcg_111a -= take
+            elif attr == "ltcg_other":
+                take = min(remaining, cg_ltcg_other)
+                cg_ltcg_other -= take
+            else:
+                take = min(remaining, cg_ltcg_112a)
+                cg_ltcg_112a -= take
+                if take > 0:
+                    notes.append(
+                        "Business loss set off against 112A LTCG — verify against the offline "
+                        "utility: the Rs 1.25L exemption interplay can make a different CYLA "
+                        "allocation cheaper.")
+            remaining -= take
+        cyla_absorbed = cy_ns_loss - remaining
+        business["carry_forward_non_speculative"] = remaining
+        business["cyla_setoff_applied"] = cyla_absorbed
+        if cyla_absorbed > 0:
+            notes.append(
+                f"s.71 set-off: Rs {cyla_absorbed:,.0f} of current-year business loss absorbed "
+                f"against other heads (Schedule CYLA); Rs {remaining:,.0f} carries forward 8 years.")
+        business["notes"] = [n for n in business["notes"] if "milestone 5" not in n]
+        notes = [n for n in notes if "milestone 5" not in n]
+
     # --- deductions ------------------------------------------------------------
-    agti_estimate = (intake["salary"]["gross"] + os_result["old"] + business_total
+    agti_estimate = (intake["salary"]["gross"] + os_old + business_total
                      + max(hp["old"], 0.0))
     ded = deductions_engine(
         intake["deduction_claims"],
         {
             "age": identity["age"],
-            "savings_interest": intake["other_sources"].get("savings_interest", 0.0),
+            # post-CYLA cap: 80TTA/80TTB only on savings interest still in GTI
+            "savings_interest": min(intake["other_sources"].get("savings_interest", 0.0),
+                                    max(os_old, 0.0)),
             "fd_interest": intake["other_sources"].get("fd_interest", 0.0),
             "agti_estimate": agti_estimate,
             "has_hra": intake["salary"].get("has_hra", False),
@@ -101,11 +157,11 @@ def run_pipeline(raw_intake: dict, rules: dict = None, ais: dict = None) -> dict
             house_property=hp["old"],
             house_property_new_regime=hp["new"],
             business_normal=business_total,
-            other_sources=os_result["old"] + cg.stcg_slab,
-            other_sources_new_regime=os_result["new"] + cg.stcg_slab,
-            stcg_111a=cg.stcg_111a,
-            ltcg_112a=cg.ltcg_112a,
-            ltcg_other=cg.ltcg_other,
+            other_sources=os_old + cg_stcg_slab,
+            other_sources_new_regime=os_new + cg_stcg_slab,
+            stcg_111a=cg_stcg_111a,
+            ltcg_112a=cg_ltcg_112a,
+            ltcg_other=cg_ltcg_other,
             vda=cg.vda,
             winnings_flat30=os_result["winnings"],
         ),
