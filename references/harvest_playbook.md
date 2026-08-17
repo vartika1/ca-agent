@@ -236,6 +236,33 @@ from portal → Downloads). It's a Go/Wails **WKWebView** app (no debug port).
 - **Download JSON** → the app emits the signed `PAN_upload_<timestamp>.json`.
   This is the REAL signed file — never hand-edit it after.
 
+### 1c. Utility quirks that COST HOURS on a real ITR-3 (Aug 2026, v1.2.3) — pre-empt these
+Learned filing a salaried + F&O + VDA return; none are in the schema, all are UI-side.
+- **Read the utility as TEXT, act by LABEL.** WKWebView has no DOM but DOES publish an
+  Accessibility tree: `filing_toolkit/axdump.py` prints every field/value (+ window-fraction
+  coords) and `axact.py press|click|list|pressn|pressall <regex>` operates controls by name.
+  ~40x cheaper than screenshots and immune to scroll position. Keep screenshots ONLY for
+  genuinely spatial questions (e.g. *which column* of a grid a value landed in).
+- **Imported grid rows are displayed but NOT bound** to the form model. Symptom: validation
+  says "Please select an Nature of exempt allowances option from the drop down at B3" while
+  the row visibly shows the right option. Fix: delete those rows and re-enter via the UI.
+- **Enter s.10 exempt rows in this order: 10(5) LTA FIRST, then 10(14).** Reverse order makes
+  the second save fail *and silently deletes both rows*.
+- **s.10(5) needs a 'Leave Travel Allowance' component inside 17(1)**; itemise the breakup as
+  Basic / HRA / LTA / Other Allowance so each exemption has its matching component.
+- **Component 'Others' (OTH) demands a Description; 'Other Allowance' (code 7) does not.**
+- **Schedule CG Table F holds POST-set-off figures** — it is reconciled against Schedule BFLA
+  items 5vi/5viii, NOT against Schedule CG. If CYLA/BFLA absorbs the gains, those rows are 0
+  (entering the gross gain both errors AND inflates 234C).
+- **Dropdown lists filter out already-used options**, so "press Down N times" drifts; always
+  read the live option list, then verify the combo's value after selecting.
+- **Known misfiring rule:** "Exemption u/s 10(14)(i) & 10(14)(ii) cannot be more than the value
+  of Salary under 'Conveyance Allowance', 'Other Allowance' & 'Others' in Section 17(1)" can
+  fire even when the component is many times the claim (probe with Rs 100 — if that also fails,
+  the utility is reading the base as 0). NEVER relabel allowances as Conveyance to silence it;
+  the utility still emits a correctly signed upload JSON, so take it to the portal and let the
+  portal's authoritative validation decide.
+
 ### 2. Driving the utility (Quartz synthetic events)
 Toolkit: `filing_toolkit/drive.py` (ships with the repo; recreate venv:
 `python3 -m venv /tmp/itdvenv && /tmp/itdvenv/bin/pip install pyobjc-framework-Quartz`).
@@ -264,6 +291,20 @@ AY 2026-27 → **Offline** → Filing Type (**139(1)** on-time / 139(4) belated 
   W/H). Chrome may move between displays and off the on-screen list — re-locate
   each call; target a specific window (e.g. a fresh incognito) via
   `CHROME_WIN=<winNumber>` env in `filing_toolkit/chrome_drive.py`.
+
+### 3b. BEFORE every upload: `scripts/verify_signed_json.py <signed.json> [schema.json]`
+The portal answers a malformed value with a generic **ITD-EXEC2003** error and costs you a
+whole regenerate cycle. The utility's Internal Validation does NOT catch these, and neither
+does `preflight_itr_check.py`. This deep checker hunts the exact classes that have caused
+real failures: leading/trailing whitespace, **trailing punctuation inside a string** (the
+real-world killer: a CFL `DateOfFiling` of `"9/11/2025,"`), any date not in ISO
+`YYYY-MM-DD`, control/non-ASCII characters, fractional AMOUNTS, a missing
+`CreationInfo.Digest` (i.e. the file is not actually utility-signed), full JSON-Schema
+validation, and an INDEPENDENT arithmetic re-foot of the headline figures
+(TotalIncome, Aggregate liability, taxes paid, BalTaxPayable incl. the s.288B
+round-to-nearest-10, and the salary chain). Exit 0 = safe to upload.
+Known non-issues it is tuned for: `SplRatePercent = 12.5` is a genuine statutory rate, and
+enum codes legitimately travel as strings ("15" state, "1" nature-of-salary).
 
 ### 4. If upload fails with "ITD-EXEC2003 … technical error"
 Generic backend error with two very different causes — **read the failure pattern**:
