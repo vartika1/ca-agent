@@ -43,7 +43,7 @@ directory, or use "Save skill" when the file is presented). Then start a chat:
 ## 5. Verify before you rely on it
 
 From the `ca-agent` folder: `bash run_tests.sh`
-Expect "ALL GREEN — engine trustworthy" (52 tests + 4 worked examples).
+Expect "ALL GREEN — engine trustworthy" (58 tests + 4 worked examples).
 
 ## 6. Good to know
 

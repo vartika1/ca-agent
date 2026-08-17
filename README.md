@@ -90,7 +90,7 @@ pip3 install -r requirements.txt
 
 **4. Prove the engine is trustworthy before you rely on it:**
 ```bash
-bash run_tests.sh          # 52 unit tests + 4 end-to-end worked examples
+bash run_tests.sh          # 58 unit tests + 4 end-to-end worked examples
 ```
 Expect **ALL GREEN**.
 
@@ -105,6 +105,27 @@ Then keep your phone handy for OTPs — the agent drives, you approve.
 - **Broker login(s)** if you invest (Zerodha / Groww / etc.) — for your tax P&L
 - **Mutual-fund / crypto exchange** logins only if you hold those
 - **Email access** — one-time permission, to find Form 16 & statements
+
+## 💸 Already filed? Check if you left money on the table
+
+The two most common ways filers overpay: TDS sitting in AIS that the return
+never claimed, and filing under the regime that wasn't actually cheaper. Both
+are fixable — a revised return (s.139(5)) for AY 2026-27 can be filed until
+**31 March 2027**.
+
+Download your filed return's JSON (portal → e-File → Income Tax Returns →
+View Filed Returns → Download JSON), then:
+
+```bash
+python3 scripts/review_filed_return.py YOUR_FILED_ITR.json
+```
+
+That alone recomputes **both regimes** from your filed figures and tells you if
+the other one was cheaper. Add your AIS figures as a second argument (format in
+the script's docstring) and it also finds **unclaimed TDS** and any
+**income gaps** the department can see. Read-only — it changes and files
+nothing. If it finds money, the skill can prepare the revised return; you
+review and submit, as always.
 
 ## ✅ The proven filing route (why it just works now)
 
@@ -135,6 +156,7 @@ scripts/                     tested Python engines (importable, framework-agnost
   preflight_itr_check.py       catches portal-reject defects before you upload
   make_fill_plan.py            decides every value BEFORE the utility opens
   verify_signed_json.py        re-foots the signed return's arithmetic independently
+  review_filed_return.py       already filed? finds unclaimed TDS & wrong-regime money
   parsers/                     AIS JSON, broker CSV/Excel
 filing_toolkit/              drives the offline utility + the browser (macOS), token-frugal
   axdump.py / axact.py         read the utility as TEXT and click by label (cheap)
@@ -142,7 +164,7 @@ references/
   ay2026_27/*.md               per-head tax rules + rates.json (source-verified, versioned by year)
   harvest_playbook.md          the fetch + assisted-filing procedure, with every live-run pitfall
   interview_guide.md           the few questions no record can answer
-tests/                       52 tests, hand-computed or drawn from real filings
+tests/                       58 tests, hand-computed or drawn from real filings
 clients/                     YOUR data goes here — git-ignored, never published
 ```
 
