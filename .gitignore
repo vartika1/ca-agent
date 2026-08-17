@@ -12,3 +12,6 @@ __pycache__/
 # downloaded statements (may contain PII)
 *AIS*.json
 *taxpnl*.xlsx
+
+# internal build/planning doc — kept locally, not part of the public skill
+PLAN.md

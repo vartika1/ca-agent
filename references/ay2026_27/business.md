@@ -22,7 +22,7 @@ Engines: `summarize_trading` + `combine_business` (trading),
 `business.fo_pnls` / `business.intraday_pnls`: per-trade P&L lists straight
 from `parse_broker_csv`. `business.professional_receipts` (44ADA gross),
 `business.business_turnover` + `business.digital` (44AD),
-`business.regular_books_income` (net profit if books案 maintained).
+`business.regular_books_income` (net profit if books are maintained).
 
 ## Interview questions
 1. F&O or intraday this year? Which brokers? → tax P&L per broker.

@@ -208,7 +208,7 @@ Build a schema-valid ITR JSON from the package. **FIRST run the pre-flight check
 defects the utility's own validation MISSES (address>50, non-ISO/comma dates,
 `SecondaryAdd:"N"`, CFL math, OS-vs-BP dividend). Fix every 🔴 BLOCKING item it lists
 before you import, so the upload doesn't bounce. Then, manually, **every
-address-line field ≤ 50 characters.** This bit us — a 72-char Schedule HP
+address-line field ≤ 50 characters.** Observed on a live filing — a 72-char Schedule HP
 property address (e.g. "FLAT 000, SOME TOWER, SOME TOWNSHIP, SOME MAIN ROAD,
 SOME LOCALITY") failed the utility's Internal Validation *"Address cannot be more
 than 50 characters"*. Check ALL of: Part A-Gen ResidenceNo / ResidenceName /

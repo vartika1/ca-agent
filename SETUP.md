@@ -16,7 +16,7 @@ you do every login and OTP yourself.
   browser while you stay present for logins.
 - **Python 3.9+**. For parsing real documents (broker Excel, password-protected
   Form 16 PDFs) run once:
-  `pip3 install openpyxl pypdf pikepdf cryptography`
+  `pip3 install -r requirements.txt`
   (Computing and running the tests needs nothing extra — pure standard library.)
 
 ## 2. Install & start

@@ -131,11 +131,15 @@ scripts/                     tested Python engines (importable, framework-agnost
   form_selector.py             ITR-1/2/3/4 decision tree
   package_builder.py           portal-ready package + plain-language summary
   pipeline.py                  one call: intake → optimised, reconciled, form-selected package
+  intake.py                    intake schema + validation
   preflight_itr_check.py       catches portal-reject defects before you upload
+  make_fill_plan.py            decides every value BEFORE the utility opens
   parsers/                     AIS JSON, broker CSV/Excel
+filing_toolkit/              drives the offline utility + the browser (macOS), token-frugal
 references/
   ay2026_27/*.md               per-head tax rules + rates.json (source-verified, versioned by year)
   harvest_playbook.md          the fetch + assisted-filing procedure, with every live-run pitfall
+  interview_guide.md           the few questions no record can answer
 tests/                       45 tests, hand-computed or drawn from real filings
 clients/                     YOUR data goes here — git-ignored, never published
 ```
