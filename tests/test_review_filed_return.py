@@ -97,6 +97,36 @@ def test_no_ais_degrades_gracefully():
     assert "skipped: no AIS file given" in out
 
 
+def _synthetic_itr1(old_regime: bool, salary=1_500_000, savings_interest=18_000, via=0.0):
+    """ITR-1 uses flat ITR1_IncomeDeductions paths, not schedules."""
+    return {"ITR": {"ITR1": {
+        "PersonalInfo": {"DOB": "1990-04-01"},
+        "FilingStatus": {"OptOutNewTaxRegime": "Y" if old_regime else "N"},
+        "ITR1_IncomeDeductions": {
+            "GrossSalary": salary,
+            "AllwncExemptUs10": {"TotalAllwncExemptUs10": 0},
+            "TotalIncomeOfHP": 0, "IncomeOthSrc": savings_interest,
+            "OthersInc": {"OthersIncDtlsDtls": {"IncomeSavingsInt": savings_interest}},
+            "UsrDeductUndChapVIA": {"TotalChapVIADeductions": via}},
+        "ITR1_TaxComputation": {"NetTaxLiability": 0},
+        "TaxPaid": {"TaxesPaid": {"TDS": 200_000, "TotalTaxesPaid": 200_000}},
+    }}}
+
+
+def test_itr1_wrong_regime_and_80tta():
+    # Old-regime ITR-1 with zero deductions: NEW cheaper + 80TTA missed.
+    rc, out = _run(_synthetic_itr1(old_regime=True))
+    assert "ITR-1" in out and "CHEAPER" in out and "80TTA" in out
+
+
+def test_itr2_form_key_supported():
+    # ITR-2 shares ITR-3's schedule shapes under a different form key.
+    d = _synthetic_itr3(old_regime=False)
+    d["ITR"]["ITR2"] = d["ITR"].pop("ITR3")
+    rc, out = _run(d)
+    assert "ITR-2" in out and "cheaper (or equal) regime" in out
+
+
 def _all_tests():
     g = globals()
     return [g[n] for n in sorted(g) if n.startswith("test_") and callable(g[n])]

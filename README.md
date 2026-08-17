@@ -90,7 +90,7 @@ pip3 install -r requirements.txt
 
 **4. Prove the engine is trustworthy before you rely on it:**
 ```bash
-bash run_tests.sh          # 58 unit tests + 4 end-to-end worked examples
+bash run_tests.sh          # 60 unit tests + 4 end-to-end worked examples
 ```
 Expect **ALL GREEN**.
 
@@ -120,12 +120,24 @@ View Filed Returns → Download JSON), then:
 python3 scripts/review_filed_return.py YOUR_FILED_ITR.json
 ```
 
-That alone recomputes **both regimes** from your filed figures and tells you if
-the other one was cheaper. Add your AIS figures as a second argument (format in
-the script's docstring) and it also finds **unclaimed TDS** and any
-**income gaps** the department can see. Read-only — it changes and files
-nothing. If it finds money, the skill can prepare the revised return; you
-review and submit, as always.
+Works on **ITR-1, 2, 3 and 4**. If you filed ITR-1/2 by the 31 July deadline,
+this is exactly for you — you can't file afresh, but you *can* still revise.
+
+That one command recomputes **both regimes** from your filed figures and tells
+you if the other one was cheaper. To also find **unclaimed TDS** and any
+**income gaps** the department can see, open your AIS on the portal (AIS →
+Part B totals), put the numbers in a small file:
+
+```json
+{"salary_reported": 0, "interest_reported": 0, "dividend_reported": 0,
+ "securities_proceeds": 0, "tds_entries": [{"amount": 0}]}
+```
+
+and pass it as the second argument. Read-only — it changes and files nothing.
+It is a screening tool, not an assessment: figures it can't reconstruct from
+the filed JSON (brought-forward losses, some special-rate items) are said so
+out loud, never silently guessed. If it finds money, the skill can prepare the
+revised return; you review and submit, as always.
 
 ## ✅ The proven filing route (why it just works now)
 
@@ -164,7 +176,7 @@ references/
   ay2026_27/*.md               per-head tax rules + rates.json (source-verified, versioned by year)
   harvest_playbook.md          the fetch + assisted-filing procedure, with every live-run pitfall
   interview_guide.md           the few questions no record can answer
-tests/                       58 tests, hand-computed or drawn from real filings
+tests/                       60 tests, hand-computed or drawn from real filings
 clients/                     YOUR data goes here — git-ignored, never published
 ```
 
