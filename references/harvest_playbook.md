@@ -169,6 +169,18 @@ loan interest certificates.
 
 ## Assisted filing session — OFFLINE-UTILITY-FIRST (proven live, Aug 2026)
 
+**TOKEN DISCIPLINE FOR THE SITTING (read first — this is what makes a filing
+cheap).** The utility has no readable DOM, so screenshots are the only feedback
+— and they are the dominant token cost. Therefore: **IMPORT the JSON, never fill
+screens field-by-field**; drive multi-step sequences with `filing_toolkit/drive.py
+batch '...'` and take **ONE** verification shot afterwards, not one per click;
+keep the default **50% JPEG** and `--crop` to the panel you actually need (a
+cropped strip ≈ 10% of a full-window shot); and let the **Internal Validation
+error list + `preflight_itr_check.py`** do the checking instead of eyeballing
+~24 schedules screenshot-by-screenshot. For the *browser*, never screenshot —
+read the DOM as text (SKILL.md §A). See `filing_toolkit/README.md` for the cost
+table and examples.
+
 **CAKEWALK SEQUENCE (do these in order; details in the numbered steps below):**
 1. Build the ITR JSON → **run `scripts/preflight_itr_check.py`** → fix every 🔴 BLOCKING item.
 2. Import into `/Applications/ITDe-Filing-2026.app` → Skip Questions → **Confirm every schedule**.
