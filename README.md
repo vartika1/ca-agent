@@ -90,7 +90,7 @@ pip3 install -r requirements.txt
 
 **4. Prove the engine is trustworthy before you rely on it:**
 ```bash
-bash run_tests.sh          # 45 unit tests + 4 end-to-end worked examples
+bash run_tests.sh          # 52 unit tests + 4 end-to-end worked examples
 ```
 Expect **ALL GREEN**.
 
@@ -134,13 +134,15 @@ scripts/                     tested Python engines (importable, framework-agnost
   intake.py                    intake schema + validation
   preflight_itr_check.py       catches portal-reject defects before you upload
   make_fill_plan.py            decides every value BEFORE the utility opens
+  verify_signed_json.py        re-foots the signed return's arithmetic independently
   parsers/                     AIS JSON, broker CSV/Excel
 filing_toolkit/              drives the offline utility + the browser (macOS), token-frugal
+  axdump.py / axact.py         read the utility as TEXT and click by label (cheap)
 references/
   ay2026_27/*.md               per-head tax rules + rates.json (source-verified, versioned by year)
   harvest_playbook.md          the fetch + assisted-filing procedure, with every live-run pitfall
   interview_guide.md           the few questions no record can answer
-tests/                       45 tests, hand-computed or drawn from real filings
+tests/                       52 tests, hand-computed or drawn from real filings
 clients/                     YOUR data goes here — git-ignored, never published
 ```
 
