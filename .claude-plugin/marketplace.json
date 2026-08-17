@@ -1,0 +1,19 @@
+{
+  "name": "ca-agent",
+  "owner": {
+    "name": "Vartika Singh",
+    "url": "https://github.com/vartika1"
+  },
+  "plugins": [
+    {
+      "name": "ca-agent",
+      "source": "./",
+      "description": "Prepare and assist-file Indian Income Tax Returns (AY 2026-27): reads AIS, reconciles, compares both regimes, picks the ITR form, guides filing. Never files for you.",
+      "version": "1.0.0",
+      "skills": [
+        "./"
+      ]
+    }
+  ],
+  "description": "Open-source CA agent: Indian ITR preparation & assisted filing skill (AY 2026-27)"
+}

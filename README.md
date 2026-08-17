@@ -94,7 +94,15 @@ bash run_tests.sh          # 60 unit tests + 4 end-to-end worked examples
 ```
 Expect **ALL GREEN**.
 
-**5. Start Claude Code in the folder and say:**
+**5. Install as a skill** (one command inside Claude Code):
+```
+/plugin marketplace add vartika1/ca-agent
+/plugin install ca-agent@ca-agent
+```
+*(or skip this and just start Claude Code inside the cloned folder — the skill
+loads from the repo itself)*
+
+**6. Then say:**
 > **"Use the ca-agent skill to help me file my ITR."**
 
 Then keep your phone handy for OTPs — the agent drives, you approve.
