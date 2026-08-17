@@ -11,6 +11,8 @@
 ![Assisted filing — you stay in control](https://img.shields.io/badge/filing-assisted%2C%20you%20approve-orange)
 ![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey)
 
+![Already filed? One command finds money left on the table](docs/ca-agent-demo.png)
+
 It reads your **AIS**, parses your **Form 16** and **broker/mutual-fund
 statements**, computes tax under **both the old and new regimes**, reconciles
 every rupee against the tax department's own records, picks the **correct ITR
